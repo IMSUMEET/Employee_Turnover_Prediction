@@ -17,7 +17,7 @@ function App() {
     }
   },[submitted,result])
   const handleEnd = () => {
-    setSelected(false);
+    setSubmitted(false);
     setResult({});
     setSelected(-1);
   }
