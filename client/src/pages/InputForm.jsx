@@ -29,7 +29,7 @@ export default function InputForm({ onSubmit }) {
       try {
         const form = new FormData();
         form.append("employees", file);
-        const res = await fetch("http://127.0.0.1:5000/predictions", {
+        const res = await fetch("http://127.0.0.1:5001/predictions", {
           method: "POST",
           body: form,
         });
