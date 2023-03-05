@@ -2,22 +2,49 @@ import pickle
 import csv
 import os
 import sqlite3
-from flask import Flask, jsonify, request, g, session
-from flask_cors import CORS
+from flask import Flask, jsonify, request, g 
+from flask_cors import CORS 
 from dotenv import dotenv_values
 from passlib.hash import pbkdf2_sha256
+from functools import wraps
+import jwt
+from datetime import datetime, timedelta
 
 config = dotenv_values(".env") 
 
 app = Flask(__name__)
 app.secret_key = config["SECRET_KEY"]
-app.config["SESSION_COOKIE_NAME"] = config["COOKIE_SECRET"]
-CORS(app)
+CORS(app, supports_credentials=True)
 
 pipeline = pickle.load(open("./pipeline.pkl", "rb"))
 
 #prediction = pipeline.predict(
 #    [['operations', 0, 0.57, 3, 'low', 5, 0.62, 0, 180]])
+
+# decorator for verifying the JWT
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        # jwt is passed in the request header
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        # return 401 if token is not passed
+        if not token:
+            return jsonify({'message' : 'Token is missing !!'}), 401
+  
+        try:
+            # decoding the payload to fetch the stored details
+            data = jwt.decode(token, config['SECRET_KEY'], algorithms=['HS256'])
+        except Exception as e:
+            print(e)
+            return jsonify({
+                'message' : 'Token is invalid !!'
+            }), 401
+        # returns the current logged in users context to the routes
+        return  f(data, *args, **kwargs)
+  
+    return decorated
 
 
 @app.route("/registration", methods = ['POST'])
@@ -34,13 +61,6 @@ def registerUser():
         return jsonify({"success" : True})
     return jsonify({"success" : False})
 
-@app.route("/logout", methods = ['POST'])
-def logoutUser():
-    if 'user' in session:
-        session.pop('user')
-        return jsonify({"hadPrevilage" : True})
-    return jsonify({"hadPrevilage" : False})
-    
 
 @app.route("/login", methods = ['POST'])
 def loginUser():
@@ -54,14 +74,13 @@ def loginUser():
             user = result[0][1]
             userPass = result[0][2]
             if pbkdf2_sha256.verify(password, userPass):
-                session['user'] = user
-                return jsonify({"success" : True})
+                token = jwt.encode({'public_id': user[0][0],'exp' : datetime.utcnow() + timedelta(minutes = 30)}, config['SECRET_KEY'])
+                return jsonify({"success" : True, "token" : token})
     return jsonify({"success" : False})
 
 @app.route("/predict", methods = ['POST'])
-def getEmployeeTurnOver():
-    if 'user' not in session:
-        return jsonify({"access" : False})
+@token_required
+def getEmployeeTurnOver(user):
     department = request.form['department']
     promoted = int(request.form['promoted'])
     review = float(request.form['review'])
@@ -75,12 +94,13 @@ def getEmployeeTurnOver():
     data = {
         "prediction" : int(prediction[0])
     }
-    return jsonify(data)
+    response = jsonify(data)
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    return response
 
 @app.route("/predictions", methods = ['POST'])
-def getEmployeesTurnOver():
-    if 'user' not in session:
-        return jsonify({"access" : False})
+@token_required
+def getEmployeesTurnOver(user):
     uploaded_file = request.files['employees'] # This line uses the same variable and worked fine
     filePath = os.path.join("./uploads", uploaded_file.filename)
     uploaded_file.save(filePath)
@@ -112,7 +132,8 @@ def getEmployeesTurnOver():
         "prediction" : list(map( lambda x : { **x, 'result' : int(predictions[x['index']])}   ,res))
     }
     os.remove(filePath)
-    return jsonify(data)
+    response = jsonify(data)
+    return response
 
 def get_db():
     db = getattr(g, '_database', None)

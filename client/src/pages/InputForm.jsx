@@ -6,19 +6,9 @@ import CustomInputDropdownBox from "../components/CustomInputDropdownBox";
 import Divider from "../components/Divider";
 import FileSelector from "../components/FileSelector";
 import SubmitButton from "../components/SubmitButton";
+import wwwFormURLencode from "../utils/urlencode";
 
-function wwwFormURLencode(details) {
-  var formBody = [];
-  for (var property in details) {
-    var encodedKey = encodeURIComponent(property);
-    var encodedValue = encodeURIComponent(details[property]);
-    formBody.push(encodedKey + "=" + encodedValue);
-  }
-  formBody = formBody.join("&");
-  return formBody;
-}
-
-export default function InputForm({ onSubmit }) {
+export default function InputForm({ onSubmit, onAuthFail, token }) {
   const [file, setFile] = useState();
   //Handle form submittion
   const handleSubmit = async (e) => {
@@ -31,6 +21,9 @@ export default function InputForm({ onSubmit }) {
         form.append("employees", file);
         const res = await fetch("http://127.0.0.1:5001/predictions", {
           method: "POST",
+          headers: {
+            "x-access-token": token,
+          },
           body: form,
         });
         const data = await res.json();
@@ -58,6 +51,7 @@ export default function InputForm({ onSubmit }) {
         });
       } catch (e) {
         console.log(e);
+          onAuthFail();
       }
       return;
     }
@@ -85,20 +79,24 @@ export default function InputForm({ onSubmit }) {
         satisfaction: values.satisfactionLevel,
         tenure: values.noOfEmployeementYears,
       };
-      const res = await fetch("http://127.0.0.1:5000/predict", {
+      const res = await fetch("http://127.0.0.1:5001/predict", {
         method: "POST",
         headers: {
+          "x-access-token": token,
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: wwwFormURLencode(form),
       });
+      console.log(res);
       const data = await res.json();
+      console.log(data);
       onSubmit({
         file: false,
         res: [{ data: values, result: data.prediction === 1 }],
       });
     } catch (e) {
       console.log(e);
+      onAuthFail()
     }
   };
   return (

@@ -1,44 +1,40 @@
-import { useEffect, useState } from 'react';
-
-import InputForm from './pages/InputForm';
-import IndividualEval from './pages/IndividualEval';
-import CumulativeEval from './pages/CumulativeEval';
-
+import React, { useState } from "react";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
+import PredictionApp from "./PredictionApp";
 
 function App() {
-  const [submitted, setSubmitted] = useState(false);
-  const [selected, setSelected] = useState(-1);
-  const [result, setResult] = useState({});
-  useEffect(()=>{
-    if(submitted && result.res){
-      if(!result.file){
-        setSelected(0)
-      }
-    }
-  },[submitted,result])
-  const handleEnd = () => {
-    setSubmitted(false);
-    setResult({});
-    setSelected(-1);
+  const [auth, setAuth] = useState({ is: false, token: null });
+  const [register, setRegister] = useState(false);
+  if (auth.is) {
+    return (
+      <PredictionApp
+        onAuthFail={() => {
+          setAuth({ is: false, token: null });
+        }}
+        token={auth.token}
+      />
+    );
   }
-  const handleBack = () => {
-    if(result.res.length === 1){
-      handleEnd();
-      return;
-    }
-    setSelected(-1);
+  if (register) {
+    return (
+      <Registration
+        onEnd={() => {
+          setRegister(false);
+        }}
+      />
+    );
   }
-  const handleSubmit = (res) => {
-    setSubmitted(true);
-    setResult(res);
-  }
-  if(!submitted || !result.res){
-    return <InputForm onSubmit={handleSubmit}/>
-  }
-  if(selected >= 0){
-    return(<IndividualEval res={result.res[selected]} onEnd={handleEnd} onBack={handleBack}/>)
-  }
-  return <CumulativeEval results={result.res} setSelected={setSelected} onEnd={handleEnd} />
+  return (
+    <Login
+      onAuth={(token) => {
+        setAuth({ is: true, token });
+      }}
+      onBack={() => {
+        setRegister(true);
+      }}
+    />
+  );
 }
 
-export default App
+export default App;
