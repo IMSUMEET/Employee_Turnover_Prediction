@@ -127,9 +127,10 @@ def getEmployeesTurnOver(user):
             result['index'] = index  
             res.append(result)
             predictionInputs.append([result['department'], result['promoted'], result['review'], result['projects'], result['salary'], result['tenure'], result['satisfaction'], result['bonus'], result['avg_hrs_month']])
+            index += 1
     predictions = pipeline.predict(predictionInputs)
     data = {
-        "prediction" : list(map( lambda x : { **x, 'result' : int(predictions[x['index']])}   ,res))
+        "prediction" : list(map( lambda x : { **x, 'result' : int(predictions[x['index']-1])}   ,res))
     }
     os.remove(filePath)
     response = jsonify(data)
