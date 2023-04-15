@@ -16,7 +16,7 @@ To deploy this project, follow these steps:
 
 1. Open VSCode on the project files directory.
 
-2. In the 'server' folder, create a file called '.env' and add the following line, replacing '<write row string>' with a secret string that should not be shared:
+2. In the `server` folder, create a file called `.env` and add the following line, replacing `<write row string>` with a secret string that should not be shared:
 ```bash
   SECRET_KEY = < write row string >
 ```
