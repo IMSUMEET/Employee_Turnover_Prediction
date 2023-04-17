@@ -27,7 +27,7 @@ This key is used to encrypt sensitive data and should be kept secret.
   cd server
 ```
 ```bash
-  pip install -r reqirements.txt
+  pip install -r requirements.txt
 ```
 ```bash
   python src/server.py
