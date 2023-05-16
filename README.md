@@ -44,3 +44,6 @@ This will install the necessary Python packages and start the server.
 ```bash
   npm run dev
 ```
+
+![corr matrix](https://github.com/IMSUMEET/Employee_Turnover_Prediction/assets/64970777/be603b3d-3311-4162-9c4c-1fab5b467d97)
+
