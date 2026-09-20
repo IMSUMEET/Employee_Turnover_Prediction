@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background-color: #ece5db;
+  background-image:
+    radial-gradient(at 12% 18%, rgba(124, 106, 156, 0.14) 0px, transparent 45%),
+    radial-gradient(at 88% 8%, rgba(224, 120, 86, 0.12) 0px, transparent 42%),
+    radial-gradient(at 78% 92%, rgba(91, 138, 114, 0.12) 0px, transparent 45%);
+  background-attachment: fixed;
+  color: #2f2a3d;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* subtle paper grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#__next,
+main {
+  position: relative;
+  z-index: 1;
+}
+
+@layer components {
+  .clay-card {
+    @apply rounded-clay bg-sand-100 shadow-clay;
+  }
+  .clay-inset {
+    @apply rounded-clay bg-sand-200 shadow-clay-inset;
+  }
+  .clay-input {
+    @apply w-full rounded-2xl bg-sand-200 px-4 py-3 text-ink shadow-clay-inset outline-none
+      placeholder:text-ink-faint transition focus:ring-2 focus:ring-clay-plum/40;
+  }
+  .clay-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-sand-100 px-5 py-3
+      font-semibold text-ink shadow-clay-sm transition-all duration-200
+      hover:-translate-y-0.5 hover:shadow-clay active:translate-y-0 active:shadow-clay-pressed
+      disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0;
+  }
+  .clay-btn-primary {
+    @apply bg-clay-plum text-white shadow-clay-plum hover:bg-clay-plum-deep;
+  }
+  .clay-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-sand-200 px-3 py-1 text-sm
+      font-medium text-ink-soft shadow-clay-sm;
+  }
+}
+
+/* clay range slider */
+.clay-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  outline: none;
+  box-shadow: inset 3px 3px 8px rgba(178, 162, 138, 0.5),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.7);
+}
+.clay-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #f6f1ea;
+  border: 3px solid #7c6a9c;
+  cursor: pointer;
+  box-shadow: 3px 3px 8px rgba(178, 162, 138, 0.6);
+  transition: transform 0.15s ease;
+}
+.clay-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+.clay-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #f6f1ea;
+  border: 3px solid #7c6a9c;
+  cursor: pointer;
+}
+
+/* thin, on-brand scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d9ccb8;
+  border-radius: 999px;
+  border: 2px solid #ece5db;
+}

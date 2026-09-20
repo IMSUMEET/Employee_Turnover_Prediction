@@ -1,0 +1,94 @@
+{
+  "features": [
+    "department",
+    "promoted",
+    "review",
+    "projects",
+    "salary",
+    "tenure",
+    "satisfaction",
+    "bonus",
+    "avg_hrs_month"
+  ],
+  "cat_features": [
+    "department",
+    "salary"
+  ],
+  "labels": {
+    "department": "Department",
+    "promoted": "Promoted (last 24m)",
+    "review": "Last review score",
+    "projects": "Active projects",
+    "salary": "Salary tier",
+    "tenure": "Tenure (years)",
+    "satisfaction": "Satisfaction",
+    "bonus": "Bonus (last 24m)",
+    "avg_hrs_month": "Avg hours / month"
+  },
+  "dataset": {
+    "rows": 9540,
+    "attrition_rate": 0.2918
+  },
+  "metrics": {
+    "accuracy": 0.8653,
+    "roc_auc": 0.9281,
+    "precision": 0.7918,
+    "recall": 0.7307,
+    "f1": 0.76,
+    "cv_accuracy_mean": 0.8595,
+    "cv_accuracy_std": 0.0374,
+    "confusion_matrix": [
+      [
+        1244,
+        107
+      ],
+      [
+        150,
+        407
+      ]
+    ]
+  },
+  "feature_importance": {
+    "department": 1.44,
+    "promoted": 0.23,
+    "review": 18.82,
+    "projects": 0.83,
+    "salary": 0.76,
+    "tenure": 12.82,
+    "satisfaction": 25.31,
+    "bonus": 0.65,
+    "avg_hrs_month": 39.13
+  },
+  "model_comparison": [
+    {
+      "model": "CatBoost (served)",
+      "accuracy": 0.8653,
+      "roc_auc": 0.9281,
+      "f1": 0.76
+    },
+    {
+      "model": "Hist Gradient Boosting",
+      "accuracy": 0.8611,
+      "roc_auc": 0.9256,
+      "f1": 0.7553
+    },
+    {
+      "model": "Random Forest",
+      "accuracy": 0.8559,
+      "roc_auc": 0.9133,
+      "f1": 0.728
+    },
+    {
+      "model": "K-Nearest Neighbours",
+      "accuracy": 0.7296,
+      "roc_auc": 0.7232,
+      "f1": 0.4931
+    },
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.7243,
+      "roc_auc": 0.7169,
+      "f1": 0.2892
+    }
+  ]
+}

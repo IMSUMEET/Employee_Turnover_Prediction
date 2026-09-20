@@ -1,0 +1,21 @@
+name,department,promoted,review,projects,salary,tenure,satisfaction,bonus,avg_hrs_month
+Ethan Rodriguez,sales,0,0.692142623,4,medium,8,0.571781215,0,188.420776
+Ava Patel,support,0,0.491205534,3,medium,6,0.802112793,0,184.0142748
+Marcus Lee,sales,0,0.664650893,3,medium,6,0.555531714,0,182.4996885
+Olivia Jones,marketing,0,0.675401847,3,high,6,0.403786263,0,183.9040698
+Caleb Kim,operations,0,0.890445492,3,low,4,0.291648252,0,178.3544754
+Sophia Chen,sales,0,0.756512305,4,medium,7,0.371333285,1,185.9345169
+Daniel Nguyen,logistics,0,0.606481651,3,medium,9,0.56203684,0,192.7395968
+Isabella Ramirez,marketing,1,0.72797945,3,low,8,0.497526135,1,190.379271
+Lucas Ortiz,sales,0,0.821295363,3,low,5,0.475723747,1,180.7594283
+Chloe Lee,retail,0,0.756342601,3,medium,5,0.343096265,0,180.5498349
+Sebastian Jackson,retail,0,0.626311208,3,medium,5,0.603957695,0,179.8787528
+Mia Wong,support,0,0.73338376,4,medium,7,0.363609364,0,186.6137166
+Xavier Wilson,engineering,0,0.592850681,3,medium,6,0.340247759,0,182.8067165
+Emily Davis,sales,0,0.806474577,4,high,5,0.325081224,0,181.0680455
+Gabriel Perez,sales,0,0.715136369,3,medium,11,0.654364371,0,197.2560231
+Lily Kim,engineering,0,0.522476929,3,medium,10,0.558701907,0,193.9070393
+David Taylor,retail,0,0.683592804,3,high,6,0.615041455,0,181.9116582
+Harper Brown,logistics,0,0.527361423,5,medium,4,0.841606643,0,178.3208329
+Nathaniel Rivera,marketing,0,0.721376333,4,high,6,0.356594287,0,181.5662519
+Madison Mitchell,retail,0,0.629210588,3,medium,6,0.579802185,1,182.0646144

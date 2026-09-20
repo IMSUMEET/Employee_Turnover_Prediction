@@ -1,0 +1,21 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Environment / secrets
+.env
+api/.env
+*.db
+
+# Node / Next
+node_modules/
+web/.next/
+web/out/
+
+# Uploads / scratch
+api/uploads/
+.DS_Store
